@@ -1,0 +1,8 @@
+git init => settings để đẩy git lên trên remote(web github)
+git remote add origin <link remote>
+
+git add . ('.' thêm tất cả)
+git commit -m'..' (comment)
+git push -u origin <master> (-u => mặc định => lần sau git push là sẽ đẩy lên nhánh) 
+
+git reset --hard <mã commit>

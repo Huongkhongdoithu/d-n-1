@@ -11,7 +11,6 @@
                             <th>MÃ TÀI KHOẢN</th>
                             <th>HỌ VÀ TÊN</th>
                             <th>TÊN ĐĂNG NHÂP</th>
-                            
                             <th>EMAIL</th>
                             <th>ĐỊA CHỈ</th>
                             <th>SỐ ĐIỆN THOẠI</th>

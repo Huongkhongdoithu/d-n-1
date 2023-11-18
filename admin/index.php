@@ -11,20 +11,55 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
     include "../model/taikhoan.php";
     include "../model/binhluan.php";
     include "../model/cart.php";
-    include "header.php";
-    //controller
+
     if (isset($_GET['act'])) {
         $act = $_GET['act'];
         switch ($act) {
+                //tài khoản
+                /**
+             * ====================================================================================
+             *                                 TÀI KHOẢN
+             * ====================================================================================
+             */
+            case 'UpdateTaiKhoan':
+                $id = $_GET['id'];
+                $Onetaikhoan = loadone_taikhoan($id);
+
+                if (isset($_POST['sua'])) {
+
+                    extract($_POST);
+                    update_taikhoan($name, $user, $pass, $email, $address, $tel,$role, $id);
+                    // header('location:index.php?act=sửa');
+                }
+
+                include_once 'view/taikhoan/UpdateTaiKhoan.php';
+                break;
             case 'ListTaiKhoan':
-                $taiKhoan = loadall_taikhoan();
-                include_once '../views/danhmuc/ListCategory.php';
+                $listtaikhoan = loadall_taikhoan();
+                include_once 'view/taikhoan/ListTaiKhoan.php';
                 break;
             case 'AddTaiKhoan':
-               
-                include_once '../views/danhmuc/AddCategory.php';
+                if (isset($_POST['them'])) {
+                    $role = $_POST['role'];
+                    // echo"<pre>";
+                    // print_r($_POST);
+                    // echo"</pre>";
+
+                    extract($_POST);
+                    if (insert_taikhoan($name, $user, $pass, $email, $address, $tel, $role)) {
+                        echo "<script>alert('Thành công')</script>";
+                        // header('location: index.php?act=');
+                    };
+                }
+                include_once 'view/taikhoan/AddTaiKhoan.php';
                 break;
-            //Thêm danh mục
+                //tài khoản
+                /**
+                 * ====================================================================================
+                 *                                 TÀI KHOẢN
+                 * ====================================================================================
+                 */
+                // //Thêm danh mục
             case 'adddm':
                 //kiểm tra xem người dùng có nhấn vào nút add không
                 if (isset($_POST['themmoi']) && ($_POST['themmoi'])) {
@@ -146,33 +181,33 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
                 $listsanpham = loadall_sanpham();
 
                 include "sanpham/list.php";
-                break;
-            case 'edit_taikhoan':
-                if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
-                    $name = $_POST['name'];
-                    $email = $_POST['email'];
-                    $address = $_POST['address'];
-                    $tel = $_POST['tel'];
-                    $id = $_POST['id'];
-                    update_taikhoan($id, $email, $name, $address, $tel);
+                //     break;
+                // case 'edit_taikhoan':
+                //     if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
+                //         $name = $_POST['name'];
+                //         $email = $_POST['email'];
+                //         $address = $_POST['address'];
+                //         $tel = $_POST['tel'];
+                //         $id = $_POST['id'];
+                //         update_taikhoan($id, $email, $name, $address, $tel);
 
 
-                    header('location:index.php?act=edit_taikhoan');
-                }
+                //         header('location:index.php?act=edit_taikhoan');
+                //     }
 
-                include "taikhoan/update.php";
-                break;
-            case 'dangky':
-                if (isset($_POST['dangky']) && ($_POST['dangky'])) {
-                    $name = $_POST['name'];
-                    $email = $_POST['email'];
-                    $user = $_POST['user'];
-                    $pass = $_POST['pass'];
-                    insert_taikhoan($name, $email, $user, $pass);
-                    $thongbao = "Đã đăng ký thành công. Vui lòng đăng nhập để thực hiện chúc năng";
-                }
-                include "taikhoan/dangky.php";
-                break;
+                //     include "taikhoan/update.php";
+                //     break;
+                // case 'dangky':
+                //     if (isset($_POST['dangky']) && ($_POST['dangky'])) {
+                //         $name = $_POST['name'];
+                //         $email = $_POST['email'];
+                //         $user = $_POST['user'];
+                //         $pass = $_POST['pass'];
+                //         insert_taikhoan($name, $email, $user, $pass);
+                //         $thongbao = "Đã đăng ký thành công. Vui lòng đăng nhập để thực hiện chúc năng";
+                //     }
+                //     include "taikhoan/dangky.php";
+                //     break;
 
             case 'thoat':
                 unset($_SESSION['role']);
@@ -248,11 +283,11 @@ if (isset($_SESSION['role']) && ($_SESSION['role'] == 1)) {
                 include "thongke/bieudo.php";
                 break;
             default:
-                include "home.php";
+                include "view/taikhoan/UpdateTaiKhoan.php";
                 break;
         }
     } else {
-        include "home.php";
+        include "view/taikhoan/UpdateTaiKhoan.php";
     }
 
     include "footer.php";

@@ -1,8 +1,8 @@
 <?php
-    function insert_taikhoan($name,$email, $user, $pass){
-        $sql = "insert into taikhoan(name,email, user, pass) 
-        values ('$name','$email','$user','$pass')";
-        pdo_execute($sql);
+    function insert_taikhoan($name, $user, $pass,$email,$address,$tel,$role){
+        $sql = "insert into taikhoan(name, user, pass,email,address,tel,role) 
+        values ('$name', '$user', '$pass','$email','$address','$tel','$role')";
+        return pdo_execute($sql);
     }
     function checkuser($user, $pass){
         $sql="select * from taikhoan where user= '".$user."' and pass='".$pass."'";
@@ -20,9 +20,9 @@
         $dm=pdo_query_one($sql);
         return $dm;
     }
-    function update_taikhoan($id, $email, $name,$address, $tel){
-           $sql = " update taikhoan set  email='".$email."'
-           , name='".$name."' , address='".$address."' , tel='".$tel."' where id=".$id;
+    function update_taikhoan($name, $user, $pass,$email,$address,$tel,$role,$id){
+           $sql = " update taikhoan set  name='".$name."', user='".$user."' , pass='".$pass."' , email='".$email."',address='".$address."',tel='".$tel."',role='".$role."' where id=".$id;
+
            pdo_execute($sql);
         
     }
@@ -32,10 +32,11 @@
         return $listtaikhoan;
     }
     
-    function loadone_taikhoan($user){
-        $sql="select * from taikhoan where user like '%$user%' ";
-        $tk=pdo_query_one($sql);
-        return $tk;
+    function loadone_taikhoan($id){
+        $sql="select * from taikhoan where id='$id' ";
+
+        return pdo_query_one($sql);
+        
     }
     function delete_taikhoan($id){
         $delete="delete from taikhoan where id =" .$id;
